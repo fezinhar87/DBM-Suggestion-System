@@ -1,0 +1,28 @@
+{
+  "name": "reply",
+  "permissions": "NONE",
+  "restriction": "1",
+  "_id": "XXkVe",
+  "actions": [
+    {
+      "code": "const fs = require(\"fs\");\nconst path = \"./data/suggestions.json\";\nconst fileExists = fs.existsSync(path);\nif (!fileExists) { console.log(\"Please make a file called 'suggestions.json' in the data folder of your bot!\"); }",
+      "behavior": "0",
+      "interpretation": "1",
+      "storage": "0",
+      "varName": "",
+      "VTypeSelect": "0",
+      "CVTypeValue": "",
+      "name": "Run Script"
+    },
+    {
+      "code": "/* PUT THE CHANNEL ID IN THE QUOTES BELOW! */ \nconst channel = client.channels.cache.get(\"CHANNEL ID HERE\");\n/* PUT THE CHANNEL ID IN THE QUOTES ABOVE! */ \nconst fs = require(\"fs\");\nconst path = \"./data/suggestions.json\";\nconst message = msg;\nconst prefix = Files.data.settings.tag;\nconst args = message.content.slice(prefix.length + 6).trim().split(/ +/g);\nif (!args[0] || !args[1]) { message.channel.send(\"You must type some text to reply to!\\n\\n`\" + prefix + \"reply <suggestion ID> <text>`\") }\nif (fs.existsSync(path) && args[0] && args[1]) {\n    const suggestion = require(\"./data/suggestions.json\");\n    try {\n        var suggestionText = suggestion[args[0]].text;\n        const e = new DiscordJS.MessageEmbed()\n        .setAuthor(message.author.username, message.author.avatarURL())\n        .setTitle(\"Reply To Suggestion\")\n        .setDescription(suggestionText)\n        .addField(\"Comment\", args.slice(1).join(\" \"))\n        .setColor(\"#2F3136\");\n        channel.send(e)\n    } catch(e) {\n        message.channel.send(\"That suggestion ID does not exist.\");\n        console.log(e)\n    }\n}",
+      "behavior": "0",
+      "interpretation": "1",
+      "storage": "0",
+      "varName": "",
+      "VTypeSelect": "0",
+      "CVTypeValue": "",
+      "name": "Run Script"
+    }
+  ]
+}
